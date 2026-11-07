@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      # Set these before exposing the app to the internet:
+      SETUP_KEY: ${SETUP_KEY:-}          # required to create the first account
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}  # true when served over HTTPS
+      TRUST_PROXY: ${TRUST_PROXY:-0}     # 1 when behind a reverse proxy / PaaS
+    volumes:
+      - billing-data:/data               # the SQLite database lives here
+    restart: unless-stopped
+volumes:
+  billing-data:
